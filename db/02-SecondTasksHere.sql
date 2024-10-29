@@ -56,9 +56,15 @@ SELECT city from stores) AS area_of_influence;
 -- DESC LIMIT 1;
 
 WITH biggest_catalogue AS (
-    SELECT store_id, COUNT(stock_id)
+    SELECT stock.store_id, COUNT(stock.stock_id) AS total_stock
     FROM stock
-    GROUP BY store_id
+    JOIN stores ON stock.store_id = stores.store_id
+    WHERE stores.city IN (
+        SELECT DISTINCT location  FROM customers
+    )
+    GROUP BY stock.store_id
+    ORDER BY total_stock 
+    DESC LIMIT 1
 ),
 all_stores AS (
     SELECT DISTINCT location FROM 
@@ -66,17 +72,17 @@ all_stores AS (
     UNION SELECT city from stores) 
 )
 
-SELECT * FROM biggest_catalogue;
+-- SELECT * FROM biggest_catalogue;
 
 
--- SELECT genre_name, COUNT(stock.movie_id) AS movies_in_stock FROM genres g
--- JOIN movies_genres mg ON g.genre_id = mg.genre_id
--- JOIN movies ON movies.movie_id = mg.movie_id
--- JOIN stock ON stock.movie_id = movies.movie_id
--- WHERE 
--- GROUP BY genre_name
--- ORDER BY movies_in_stock
--- DESC LIMIT 1;
+SELECT genre_name, COUNT(stock.movie_id) AS movies_in_stock FROM genres g
+JOIN movies_genres mg ON g.genre_id = mg.genre_id
+JOIN movies ON movies.movie_id = mg.movie_id
+JOIN stock ON stock.movie_id = movies.movie_id
+JOIN biggest_catalogue ON stock.store_id = biggest_catalogue.store_id
+GROUP BY genre_name
+ORDER BY movies_in_stock
+DESC LIMIT 1;
 
 
 
