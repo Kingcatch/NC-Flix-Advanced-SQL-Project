@@ -14,10 +14,16 @@ To reset the data and rerun all SQL scripts, use:
 Through this project I have:
 
 ✅ Built complex SQL queries using subqueries to retrieve and manipulate data efficiently.
+
 ✅ Applied aggregate functions to summarise and extract meaningful insights from datasets.
+
 ✅ Used Common Table Expressions (CTEs) to improve query readability and maintainability.
+
 ✅ Implemented set operations like UNION, INTERSECT, and EXCEPT to combine and compare query results.
+
 ✅ Applied conditional logic within SQL queries to handle dynamic scenarios.
+
 ✅ Developed window functions for advanced analytical queries, enabling ranking and partition-based calculations.
+
 ✅ Integrated PostgreSQL with Python using pg8000 and implemented database interactions using Test-Driven Development (TDD).
 
