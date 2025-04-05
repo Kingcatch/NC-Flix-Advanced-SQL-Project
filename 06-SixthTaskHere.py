@@ -24,11 +24,15 @@ def create_conn():
 )
     return conn
 
-def select_moviess():
+def select_movies(sort_by='title'):
     conn = create_conn()
+    sort_by_options = ['title', 'release_date', 'rating', 'cost']
+    if sort_by not in sort_by_options:
+        sort_by = 'title'
+        
     query = """ SELECT movie_id, title, release_date, rating, classification 
     FROM movies
-    ORDER BY title;
+    ORDER BY {sort_by};
     """
     rows = conn.run(query)
     
@@ -43,7 +47,7 @@ def select_moviess():
     
 # if __name__ == "__main__":
 #     from pprint import pprint
-#     movies = select_moviess()
+#     movies = select_movies()
 #     pprint(movies)
 
     
