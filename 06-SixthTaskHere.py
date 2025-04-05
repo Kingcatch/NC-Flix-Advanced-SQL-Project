@@ -24,7 +24,7 @@ def create_conn():
 )
     return conn
 
-def select_movies(sort_by='title', order='ASC'):
+def select_movies(sort_by='title', order='ASC', min_rating=None):
     conn = create_conn()
     sort_by_options = ['title', 'release_date', 'rating', 'cost']
     order_options = ['ASC', 'DESC']
@@ -47,6 +47,9 @@ def select_movies(sort_by='title', order='ASC'):
         {columns[i]: row[i] for i in range(len(columns))}
         for row in rows
     ]
+    
+    if min_rating is not None:
+        movies = [movie for movie in movies if movie['rating'] and movie['rating'] > min_rating]
 
     if order == 'DESC':
         movies.reverse()
@@ -60,6 +63,5 @@ def select_movies(sort_by='title', order='ASC'):
 #     movies = select_movies()
 #     pprint(movies)
 
-    
 
 
