@@ -24,13 +24,18 @@ def create_conn():
 )
     return conn
 
-def select_movies(sort_by='title'):
+def select_movies(sort_by='title', order='ASC'):
     conn = create_conn()
     sort_by_options = ['title', 'release_date', 'rating', 'cost']
+    order_options = ['ASC', 'DESC']
+    
     if sort_by not in sort_by_options:
         sort_by = 'title'
         
-    query = """ SELECT movie_id, title, release_date, rating, classification 
+    if order not in order_options:
+        order = 'ASC'
+        
+    query = f""" SELECT movie_id, title, release_date, rating, classification 
     FROM movies
     ORDER BY {sort_by};
     """
@@ -38,10 +43,15 @@ def select_movies(sort_by='title'):
     
     columns = [col['name'] for col in conn.columns]
 
-    return [
+    movies = [
         {columns[i]: row[i] for i in range(len(columns))}
         for row in rows
     ]
+
+    if order == 'DESC':
+        movies.reverse()
+    
+    return movies
     
 "uncomment out the following line to see results ion terminal"
     
