@@ -12,6 +12,8 @@ release_date
 rating
 classification
 The default order of the movies should be alphabetically by title.
+
+The function will also accept additional arguments (sort_by, order & min_rating) to filter/rearrange the returned movies list based on the argument
 '''
 def create_conn():
     load_dotenv()
